@@ -45,12 +45,9 @@ do_install() {
                                 CC="${TARGET_PREFIX}gcc ${TOOLCHAIN_OPTIONS}" \
                                 ONLY_CBLAS=1 BINARY='${@map_bits(d.getVar('TARGET_ARCH', True), d)}' \
                                 TARGET='${@map_arch(d.getVar('TARGET_ARCH', True), d)}' \
-                                PREFIX=${D}/usr install
-}
-
-do_install_append() {
+                                PREFIX=${D}/usr OPENBLAS_LIBRARY_DIR=${D}${libdir} install
         rm -rf ${D}/usr/bin
-        rm -rf ${D}/usr/lib/cmake
+        rm -rf ${D}${libdir}/cmake
 }
 
 FILES_${PN}     = "${libdir}/*"
