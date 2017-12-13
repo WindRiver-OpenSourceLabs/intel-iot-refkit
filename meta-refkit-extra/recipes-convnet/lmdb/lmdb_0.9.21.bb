@@ -24,5 +24,6 @@ do_install() {
     install -d ${D}${includedir}
     install -d ${D}${mandir}
     sed -i 's:\$(prefix)/man:${mandir}:' Makefile
-    oe_runmake DESTDIR=${D} prefix=${prefix} manprefix=${mandir} install
+    sed -i 's:\$(exec_prefix)/lib:${libdir}:' Makefile
+    oe_runmake DESTDIR=${D} libdir=${libdir} prefix=${prefix} manprefix=${mandir} install
 }
