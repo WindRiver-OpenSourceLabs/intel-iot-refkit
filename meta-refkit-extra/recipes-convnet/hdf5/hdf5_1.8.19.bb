@@ -24,7 +24,7 @@ SRC_URI[md5sum] = "6f0353ee33e99089c110a1c8d2dd1b22"
 SRC_URI[sha256sum] = "59c03816105d57990329537ad1049ba22c2b8afe1890085f0c022b75f1727238"
 
 PACKAGES += "${PN}-extra"
-FILES_${PN} += "/usr/lib/libhdf5.settings"
+FILES_${PN} += "${libdir}/libhdf5.settings"
 FILES_${PN}-extra = "/usr/share/hdf5_examples/"
 
 # EXTRA_OECONF = "--enable-production --enable-cxx --with-zlib=${STAGING_INCDIR},${STAGING_LIBDIR}"
@@ -65,5 +65,11 @@ do_install() {
     ln -sr ${D}/usr/lib/libhdf5_hl_cpp-shared.so ${D}/usr/lib/libhdf5_hl_cpp.so
     ln -sr ${D}/usr/lib/libhdf5-shared.so ${D}/usr/lib/libhdf5.so
     ln -sr ${D}/usr/lib/libhdf5_tools-shared.so ${D}/usr/lib/libhdf5_tools.so
+
+    if [ "${libdir}" != "/usr/lib" ] ; then
+	install -d -m 0755 ${D}${libdir}
+	mv ${D}/usr/lib/* ${D}${libdir}
+	rmdir ${D}/usr/lib
+    fi
 }
 
