@@ -47,17 +47,15 @@ EXTRA_OECMAKE = " \
     -DH5_LLONG_TO_LDOUBLE_CORRECT_RUN__TRYRUN_OUTPUT= \
     -DH5_NO_ALIGNMENT_RESTRICTIONS_RUN=0 \
     -DH5_NO_ALIGNMENT_RESTRICTIONS_RUN__TRYRUN_OUTPUT= \
-    -DCMAKE_INSTALL_PREFIX='${D}/usr' \
 "
 
 do_install() {
-    oe_runmake install
+    cmake_do_install
     rm -f ${D}/usr/lib/*la
-    rm -f ${D}/usr/share/cmake/*
+    rm -rf ${D}/usr/share/cmake
     rm -f ${D}/usr/share/COPYING
     rm -f ${D}/usr/share/RELEASE.txt
     rm -f ${D}/usr/share/USING_HDF5_CMake.txt
-    rmdir ${D}/usr/share/cmake
     rmdir ${D}/usr/share
 
     ln -sr ${D}/usr/lib/libhdf5_cpp-shared.so ${D}/usr/lib/libhdf5_cpp.so
